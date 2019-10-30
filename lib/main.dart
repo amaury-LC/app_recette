@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite.dart';
 
-// import 'basededonne.dart';
+import 'basededonne.dart';
 
 void main() async {
   Future<String> getDatabasesPath() => databaseFactory.getDatabasesPath();
@@ -25,11 +25,34 @@ void main() async {
     version: 1,
   );
 
+  Future<List> recup() async {
+        // Get a reference to the database.
+        final Database db = await database;
+
+        // Query the table for all The Dogs.
+        final List<Map<String, dynamic>> maps = await db.query('favorie');
+
+        // Convert the List<Map<String, dynamic> into a List<Dog>.
+        return List.generate(maps.length, (i) {
+          return maps[i]['clee'];
+        });
+      }
+
+var tableau;
+
+  recup().then((value){
+    tableau = value;
+  });
+
+
+
   runApp(MaterialApp(
     title: 'Flutter Tutorial',
-    home: Home(database),
+    home: Home(database,tableau),
   ));
 }
+
+
 
 var tab1 = [
   recette("test1", "1"),
@@ -50,9 +73,11 @@ class recette {
 }
 
 class Home extends StatelessWidget {
-  Home(this.database);
+  Home(this.database,this.tableau);
 
   var database;
+
+  var tableau;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +93,7 @@ class Home extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
         children: tab1
             .map(
-              (x) => lignehomewidget(x, database),
+              (x) => lignehomewidget(x, database, tableau),
             )
             .toList(),
       ),
@@ -77,7 +102,7 @@ class Home extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Enterrecit(database)),
+            MaterialPageRoute(builder: (context) => Enterrecit(database,tableau)),
           );
         },
         child: const Icon(
@@ -122,10 +147,12 @@ class Home extends StatelessWidget {
 }
 
 class Enterrecit extends StatelessWidget {
-  Enterrecit(this.database);
+  Enterrecit(this.database,tableau);
   final myController = TextEditingController();
 
   var database;
+
+  var tableau;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +165,7 @@ class Enterrecit extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home(database)),
+              MaterialPageRoute(builder: (context) => Home(database,tableau)),
             );
           },
         ),
@@ -173,27 +200,62 @@ class Enterrecit extends StatelessWidget {
 }
 
 class lignehomewidget extends StatefulWidget {
-  lignehomewidget(this.x, this.database);
+  lignehomewidget(this.x, this.database,this.tableau);
 
   var x;
+
+  var tableau;
 
   var database;
 
   @override
-  Lignehome createState() => Lignehome(x, database);
+  Lignehome createState() => Lignehome(x, database,tableau);
 }
 
 class Lignehome extends State {
-  Lignehome(this.x, this.database);
+  Lignehome(this.x, this.database,this.tableau);
 
   var x;
+
 
   var database;
 
   var tableau;
 
+
+
+  // Future<List> recup() async {
+  //       // Get a reference to the database.
+  //       final Database db = await database;
+
+  //       // Query the table for all The Dogs.
+  //       final List<Map<String, dynamic>> maps = await db.query('favorie');
+
+  //       // Convert the List<Map<String, dynamic> into a List<Dog>.
+  //       return List.generate(maps.length, (i) {
+  //         return maps[i]['clee'];
+  //       });
+  //     }
+
+  
+
+
+
   void changement() {
     setState(() {
+      Future<List> recup() async {
+        // Get a reference to the database.
+        final Database db = await database;
+
+        // Query the table for all The Dogs.
+        final List<Map<String, dynamic>> maps = await db.query('favorie');
+
+        // Convert the List<Map<String, dynamic> into a List<Dog>.
+        return List.generate(maps.length, (i) {
+          return maps[i]['clee'];
+        });
+      }
+
       Future<void> insert1(clee) async {
         // Get a reference to the database.
         final Database db = await database;
@@ -208,50 +270,81 @@ class Lignehome extends State {
         );
       }
 
-      Future<List> recup() async {
+      Future<void> delete(key) async {
         // Get a reference to the database.
-        final Database db = await database;
+        final db = await database;
 
-        // Query the table for all The Dogs.
-        final List<Map<String, dynamic>> maps = await db.query('favorie');
-
-        // Convert the List<Map<String, dynamic> into a List<Dog>.
-        return List.generate(maps.length, (i) {
-          return maps[i]['clee'];
-        });
+        // Remove the Dog from the Database.
+        await db.delete(
+          'favorie',
+          // Use a `where` clause to delete a specific dog.
+          where: "clee = ?",
+          // Pass the Dog's id as a whereArg to prevent SQL injection.
+          whereArgs: [key],
+        );
       }
 
-      insert1(x.key);
+      // recup().then((value){
+      //   print("debut");
+      //   print(value);
+      //   if (!tableau.contains(x.key)) {
+      //   //   print(x.key);
+      //   //  insert1(x.key);
 
-      recup().then((value){
+      //   //  print('insert');
+      //    tableau.add(x.key);
+         
+      //  }else{
+      //    print(x.key);
+      //     delete(x.key);
+      //     print('delete');
+      //     tableau.remove(x.key);
+
+          
+
+      //   }
+
+      //   print(tableau);
+
+      // });
+
+     if(!tableau.contains(x.key)){
+
+       tableau.add(x.key);
+       insert1(x.key);
+     }
+     else{
+       tableau.remove(x.key);
+       delete(x.key);
+     }
+
+
+
+
       
-       tableau = value;
-      }
-      );
 
-      // if(!favorite.contains(x.key)){
 
-      //   favorite.add(x.key);
-      // }
-      // else{
-      //   favorite.remove(x.key);
-      // }
+
+       
+
+
+
     });
   }
 
-
-
   @override
-
-  
   Widget build(BuildContext context) {
-    print(tableau);
+
+    
+
+    
+    
     return ListTile(
       title: Text(x.titre),
       trailing: IconButton(
         icon: Icon(
-          favorite.contains(x.key) ? Icons.favorite : Icons.favorite_border,
-          color: favorite.contains(x.key) ? Colors.red : null,
+          tableau.contains(x.key) ? Icons.favorite : Icons.favorite_border,
+          color: tableau.contains(x.key) ? Colors.red : null,
         ),
         onPressed: () {
           changement();
@@ -264,3 +357,5 @@ class Lignehome extends State {
     );
   }
 }
+
+
