@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import 'dart:async';
@@ -10,24 +8,23 @@ import 'package:sqflite/sqflite.dart';
 
 // import 'basededonne.dart';
 
-
-void main() async{
+void main() async {
   Future<String> getDatabasesPath() => databaseFactory.getDatabasesPath();
   final Future<Database> database = openDatabase(
-  // Set the path to the database. 
-  join(await getDatabasesPath(), 'favorie.db'),
-  // When the database is first created, create a table to store dogs.
-  onCreate: (db, version) {
-    // Run the CREATE TABLE statement on the database.
-    return db.execute(
-      "CREATE TABLE favorie(id INTEGER PRIMARY KEY, clee : TEXT)",
-    );
-  },
-  // Set the version. This executes the onCreate function and provides a
-  // path to perform database upgrades and downgrades.
-  version: 1,
-);
-  
+    // Set the path to the database.
+    join(await getDatabasesPath(), 'favorie.db'),
+    // When the database is first created, create a table to store dogs.
+    onCreate: (db, version) {
+      // Run the CREATE TABLE statement on the database.
+      return db.execute(
+        "CREATE TABLE favorie(id INTEGER PRIMARY KEY, clee TEXT )",
+      );
+    },
+    // Set the version. This executes the onCreate function and provides a
+    // path to perform database upgrades and downgrades.
+    version: 1,
+  );
+
   runApp(MaterialApp(
     title: 'Flutter Tutorial',
     home: Home(database),
@@ -35,56 +32,31 @@ void main() async{
 }
 
 var tab1 = [
-  recette("test1","1"),
-  recette("test2","2"),
-  recette("test3","3"),
-  recette("test4","4"),
-  recette("test4","5"),
-  recette("test4","6"),
-
-
+  recette("test1", "1"),
+  recette("test2", "2"),
+  recette("test3", "3"),
+  recette("test4", "4"),
+  recette("test4", "5"),
+  recette("test4", "6"),
 ];
 
 var favorite = [];
 
-
-
-
-
-
-
-
-
-
-
 class recette {
-
-  recette(this.titre,this.key);
-
+  recette(this.titre, this.key);
 
   var titre;
   var key;
 }
 
-
-
 class Home extends StatelessWidget {
+  Home(this.database);
 
-Home(this.database);
-
-  
-var database ;
-
+  var database;
 
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for the major Material Components.
-
-
-
-
-
-    
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +68,7 @@ var database ;
         padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
         children: tab1
             .map(
-              (x) => lignehomewidget(x,database),
+              (x) => lignehomewidget(x, database),
             )
             .toList(),
       ),
@@ -108,7 +80,9 @@ var database ;
             MaterialPageRoute(builder: (context) => Enterrecit(database)),
           );
         },
-        child: const Icon(Icons.add,  ),
+        child: const Icon(
+          Icons.add,
+        ),
         backgroundColor: Color.fromRGBO(240, 88, 93, 1),
       ),
 
@@ -131,9 +105,7 @@ var database ;
             ),
             ListTile(
               title: Text('Recettes'),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTile(
               title: Text('Mes favories'),
@@ -150,7 +122,6 @@ var database ;
 }
 
 class Enterrecit extends StatelessWidget {
-
   Enterrecit(this.database);
   final myController = TextEditingController();
 
@@ -189,8 +160,7 @@ class Enterrecit extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: RaisedButton(
                 onPressed: () {
-                  
-                  tab1.add(recette(myController.text,"9"));
+                  tab1.add(recette(myController.text, "9"));
                 },
                 child: Text('Submit'),
               ),
@@ -202,95 +172,95 @@ class Enterrecit extends StatelessWidget {
   }
 }
 
-class lignehomewidget extends StatefulWidget{
-
-  lignehomewidget(this.x,this.database);
+class lignehomewidget extends StatefulWidget {
+  lignehomewidget(this.x, this.database);
 
   var x;
 
   var database;
 
-
-
   @override
-  Lignehome createState() => Lignehome(x,database);
-  
+  Lignehome createState() => Lignehome(x, database);
 }
 
 class Lignehome extends State {
+  Lignehome(this.x, this.database);
 
-  Lignehome(this.x,this.database);
-
-  
-
-  var x ;
+  var x;
 
   var database;
 
+  var tableau;
 
-
-
-
-
-
-  void changement (){
-
+  void changement() {
     setState(() {
+      Future<void> insert1(clee) async {
+        // Get a reference to the database.
+        final Database db = await database;
 
-      if(!favorite.contains(x.key)){
-
-        favorite.add(x.key);
+        // Insert the Dog into the correct table. You might also specify the
+        // `conflictAlgorithm` to use in case the same dog is inserted twice.
+        //
+        // In this case, replace any previous data.
+        await db.insert(
+          'favorie',
+          {"clee": clee},
+        );
       }
-      else{
-        favorite.remove(x.key);
+
+      Future<List> recup() async {
+        // Get a reference to the database.
+        final Database db = await database;
+
+        // Query the table for all The Dogs.
+        final List<Map<String, dynamic>> maps = await db.query('favorie');
+
+        // Convert the List<Map<String, dynamic> into a List<Dog>.
+        return List.generate(maps.length, (i) {
+          return maps[i]['clee'];
+        });
       }
 
+      insert1(x.key);
 
-
-
-
+      recup().then((value){
       
-      
+       tableau = value;
+      }
+      );
 
+      // if(!favorite.contains(x.key)){
+
+      //   favorite.add(x.key);
+      // }
+      // else{
+      //   favorite.remove(x.key);
+      // }
     });
   }
 
-   @override
-  Widget build(BuildContext context) {
 
-   
 
-    
-    
-    return  ListTile(
-                title: Text(x.titre),
-            
-    trailing: IconButton(
+  @override
 
-      icon:  Icon(
-              
-               favorite.contains(x.key) ? Icons.favorite : Icons.favorite_border,
-             color: favorite.contains(x.key)   ? Colors.red : null,
-              ) ,
-              onPressed: (){
-
-                
-                 changement();
-
-              },
-
-    ),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                  
-                },
-              );
-
-  }
   
-
-
+  Widget build(BuildContext context) {
+    print(tableau);
+    return ListTile(
+      title: Text(x.titre),
+      trailing: IconButton(
+        icon: Icon(
+          favorite.contains(x.key) ? Icons.favorite : Icons.favorite_border,
+          color: favorite.contains(x.key) ? Colors.red : null,
+        ),
+        onPressed: () {
+          changement();
+        },
+      ),
+      onTap: () {
+        // Update the state of the app.
+        // ...
+      },
+    );
+  }
 }
-
-
