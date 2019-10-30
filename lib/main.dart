@@ -20,7 +20,7 @@ void main() async{
   onCreate: (db, version) {
     // Run the CREATE TABLE statement on the database.
     return db.execute(
-      "CREATE TABLE favorie(id INTEGER PRIMARY KEY, clee : TEXT",
+      "CREATE TABLE favorie(id INTEGER PRIMARY KEY, clee : TEXT)",
     );
   },
   // Set the version. This executes the onCreate function and provides a
