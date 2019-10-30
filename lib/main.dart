@@ -15,7 +15,7 @@ void main() async{
   Future<String> getDatabasesPath() => databaseFactory.getDatabasesPath();
   final Future<Database> database = openDatabase(
   // Set the path to the database. 
-  join(await getDatabasesPath(), 'doggie_database.db'),
+  join(await getDatabasesPath(), 'favorie.db'),
   // When the database is first created, create a table to store dogs.
   onCreate: (db, version) {
     // Run the CREATE TABLE statement on the database.
@@ -105,7 +105,7 @@ var database ;
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Enterrecit()),
+            MaterialPageRoute(builder: (context) => Enterrecit(database)),
           );
         },
         child: const Icon(Icons.add,  ),
@@ -150,7 +150,11 @@ var database ;
 }
 
 class Enterrecit extends StatelessWidget {
+
+  Enterrecit(this.database);
   final myController = TextEditingController();
+
+  var database;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +167,7 @@ class Enterrecit extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home()),
+              MaterialPageRoute(builder: (context) => Home(database)),
             );
           },
         ),
