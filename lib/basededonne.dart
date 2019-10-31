@@ -1,109 +1,72 @@
+import 'dart:io';
 
-// import 'dart:async';
-
-// import 'package:path/path.dart';
-// import 'package:sqflite/sqflite.dart';
-
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
  
-
-// Future<String> getDatabasesPath() => databaseFactory.getDatabasesPath();
-
-// Future<void> insert(key) async {
-
-// final Future<Database> database = openDatabase(
-//   // Set the path to the database. 
-//   join(await getDatabasesPath(), 'favorie.db'),
-//   // When the database is first created, create a table to store dogs.
-//   onCreate: (db, version) {
-//     // Run the CREATE TABLE statement on the database.
-//     return db.execute(
-//       "CREATE TABLE favorie(id INTEGER PRIMARY KEY, titre TEXT, key STRING)",
-//     );
-//   },
-//   // Set the version. This executes the onCreate function and provides a
-//   // path to perform database upgrades and downgrades.
-//   version: 1,
-// );
-
-// // Get a reference to the database.
-//   final Database db = await database;
-
-//   await db.insert(
-//     'favorie',
-//     {'key' : key },
-    
-//   );
+class Databasefavorie {
 
 
+  static final _databaseName = "Favorie.db";
+  static final _databaseVersion = 1;
+
+  static final table = 'my_table_favorie';
+  
+  static final columnId = '_id';
+  static final columnName = 'clee';
+  static final columnAge = 'age';
+
+  // make this a singleton class
+  Databasefavorie._privateConstructor();
+  static final Databasefavorie instance = Databasefavorie._privateConstructor();
+
+  // only have a single app-wide reference to the database
+  static Database _database;
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    // lazily instantiate the db the first time it is accessed
+    _database = await _initDatabase();
+    return _database;
+  }
+  
+  // this opens the database (and creates it if it doesn't exist)
+  _initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: _onCreate);
+  }
+
+  // SQL code to create the database table
+  Future _onCreate(Database db, int version) async {
+    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL)');
+  }
+
+    // Helper methods
+
+  // Inserts a row in the database where each key in the Map is a column name
+  // and the value is the column value. The return value is the id of the
+  // inserted row.
+  Future<int> insert(clee) async {
+    Database db = await instance.database;
+    return await db.insert(table, {'clee' : clee});
+  }
+
+   // All of the rows are returned as a list of maps, where each map is 
+  // a key-value list of columns.
+  Future<List<Map<String, dynamic>>> queryAllRows() async {
+    Database db = await instance.database;
+    return await db.query(table);
+  }
+
+  Future<int> delete(String clee) async {
+    Database db = await instance.database;
+    return await db.delete(table, where: 'clee = ?', whereArgs: [clee]);
+  }
 
 
-// }
-
-// Future<List> recup() async{
-
-//   final Future<Database> database = openDatabase(
-//   // Set the path to the database. 
-//   join(await getDatabasesPath(), 'favorie.db'),
-//   // When the database is first created, create a table to store dogs.
-//   onCreate: (db, version) {
-//     // Run the CREATE TABLE statement on the database.
-//     return db.execute(
-//       "CREATE TABLE favorie(id INTEGER PRIMARY KEY, titre TEXT, key STRING)",
-//     );
-//   },
-//   // Set the version. This executes the onCreate function and provides a
-//   // path to perform database upgrades and downgrades.
-//   version: 1,
-// );
-
-// // Get a reference to the database.
-//   final Database db = await database;
-
-//   final List<Map<String, dynamic>> maps = await db.query('favorie');
-
-//   // Convert the List<Map<String, dynamic> into a List<Dog>.
-//   return List.generate(maps.length, (i) {
-//      return maps[i]['key'];
-//   });
-
-
-
-
-// }
-
-// Future<void> delete(key) async{
-
-//   final Future<Database> database = openDatabase(
-//   // Set the path to the database. 
-//   join(await getDatabasesPath(), 'favorie.db'),
-//   // When the database is first created, create a table to store dogs.
-//   onCreate: (db, version) {
-//     // Run the CREATE TABLE statement on the database.
-//     return db.execute(
-//       "CREATE TABLE favorie(id INTEGER PRIMARY KEY, titre TEXT, key STRING)",
-//     );
-//   },
-//   // Set the version. This executes the onCreate function and provides a
-//   // path to perform database upgrades and downgrades.
-//   version: 1,
-// );
-
-// // Get a reference to the database.
-//   final Database db = await database;
-
-//   // Remove the Dog from the Database.
-//   await db.delete(
-//     'favorie',
-//     // Use a `where` clause to delete a specific dog.
-//     where: "key = ?",
-//     // Pass the Dog's id as a whereArg to prevent SQL injection.
-//     whereArgs: [key],
-//   );
-
-
-
-
-// }
+}
 
 
 
