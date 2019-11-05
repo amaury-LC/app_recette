@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "980290143162",
+    "firebase_url": "https://apprecette1.firebaseio.com",
+    "project_id": "apprecette1",
+    "storage_bucket": "apprecette1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980290143162:android:d54a6f0315822f72bf9383",
+        "android_client_info": {
+          "package_name": "com.example.fluttertest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980290143162-kns6nsj9k4krdqqoaoptkvc9qfmpoka8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fluttertest",
+            "certificate_hash": "8ab46bdab0e3aa16865cb070cd51b4a92952cb6a"
+          }
+        },
+        {
+          "client_id": "980290143162-qvf0ojheuvkjr9t39lobqp6etkso9msd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDspWYhhHullhfe1YhQk0NWG4W3eeAhioM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980290143162-qvf0ojheuvkjr9t39lobqp6etkso9msd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
