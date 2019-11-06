@@ -40,7 +40,7 @@ class Recettepresentationstate extends State {
         
         children: <Widget>[Container(
           
-          child: recette.photo != null ? Image(image: AssetImage(recette.photo),width: 800,) : Text(""),
+          child: recette.photo != null ? Image(image: NetworkImage(recette.photo),width: 800,) : Text(""),
           
           ),Container( padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 8.0), child : Text('Ingrédients' , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Color.fromRGBO(240, 88, 93, 1),  ),)),
 

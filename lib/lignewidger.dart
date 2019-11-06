@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'presentation.dart';
 import 'basededonne.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 
 class lignehomewidget extends StatefulWidget {
   lignehomewidget(this.x, this.favorite);
@@ -66,6 +66,8 @@ class Lignehome extends State {
   @override
   Widget build(BuildContext context){
 
+    
+
     final record = Record.fromSnapshot(x);
 
     // print('test1');
@@ -94,7 +96,7 @@ class Lignehome extends State {
               MaterialPageRoute(builder: (context) => Recettepresentation(record)));
       },
       
-      leading:  record.photo!= null ? Image(image: AssetImage(record.photo),height: 100) : Text(""),
+      leading:  record.photo!= null ? Image(image: NetworkImage(record.photo)) : Text(""),
           
         
     

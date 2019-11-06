@@ -17,6 +17,7 @@ class Databasefavorie {
   static final columnName = 'clee';
   static final columnAge = 'age';
 
+
   // make this a singleton class
   Databasefavorie._privateConstructor();
   static final Databasefavorie instance = Databasefavorie._privateConstructor();
@@ -41,7 +42,7 @@ class Databasefavorie {
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL)');
+    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL,)');
   }
 
     // Helper methods
