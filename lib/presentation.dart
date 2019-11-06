@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:async';
 
@@ -29,7 +30,7 @@ class Recettepresentationstate extends State {
 
      return Scaffold(
       appBar: AppBar(
-        title: Text(recette.titre),
+        title: Text(recette.name),
         backgroundColor: Color.fromRGBO(240, 88, 93, 1),
       ),
       // body is the majority of the screen.
