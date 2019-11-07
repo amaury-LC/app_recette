@@ -15,10 +15,40 @@ import 'entrer_recette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
 
-var mesfavoris = [];
+final dbHelper = Databasefavorie.instance;
+
+
+var mesfavoris ;
+
+
+
+void queryfavoris() async {
+    var tab1 = [];
+
+    final allRows = await dbHelper.queryAllRows();
+
+    allRows.forEach((row) =>  tab1.add({'id' : row['clee'], 'name' : row['name'], 'photo' : row['photo'], 'soustitre' : row['soustitre'] }));
+
+    
+
+  
+
+     mesfavoris = await tab1;
+
+
+
+}
+
+
+
+
+
+
 
 void main() async {
-  final dbHelper = Databasefavorie.instance;
+
+  queryfavoris();
+  
   Future<List> query() async {
     var tab = [];
     final allRows = await dbHelper.queryAllRows();
@@ -42,6 +72,8 @@ void main() async {
     home: HomeStream(favorite),
   ));
 }
+
+
 
 // var tab1 = [
 //   recette("Croque-monsieur", "1", " ", "assets/croc.jpg"),

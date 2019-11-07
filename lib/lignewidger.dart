@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertest/main.dart';
+import 'package:fluttertest/main.dart' as prefix0;
 
 import 'dart:async';
 
@@ -34,12 +35,14 @@ class Lignehome extends State {
 
   
 
-  void changement(id,nom,photo,soustitre,record) {
+  void changement(id,nom,photo,soustitre) {
     setState(() {
       final dbHelper = Databasefavorie.instance;
 
-      void _insert(clee) async {
-        await dbHelper.insert(clee);
+      void _insert(clee,nom,soustitre,photo) async {
+        await dbHelper.insert(clee,nom,soustitre,photo);
+
+
       }
 
       void _delete(clee) async {
@@ -60,9 +63,10 @@ class Lignehome extends State {
       
       if (!favorite.contains(id)) {
         favorite.add(id);
-        _insert(id);
-        mesfavoris.add({'id': id,'name': nom,'photo' : photo,'soustitre' : soustitre,'record' : record});
+        _insert(id,nom,photo,soustitre);
+        mesfavoris.add({'id': id,'name': nom,'photo' : photo,'soustitre' : soustitre});
         print('insert');
+        print(mesfavoris);
       } else {
         favorite.remove(id);
         _delete(id);
@@ -73,6 +77,7 @@ class Lignehome extends State {
           mesfavoris.removeAt(i);
         }
         print('delete');
+        print(mesfavoris);
       }
 
 
@@ -103,13 +108,13 @@ class Lignehome extends State {
           color:  favorite.contains(record.reference.documentID) ? Colors.red : null,
         ),
         onPressed: () {
-          changement(record.reference.documentID,record.name,record.photo,record.soustitre,record);
+          changement(record.reference.documentID,record.name,record.photo,record.soustitre);
         },
       ),
       onTap: () {
          Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Recettepresentation(record)));
+              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo)));
       },
       
       leading:  record.photo!= null ? Image(image: NetworkImage(record.photo)) : Text(""),
@@ -138,7 +143,7 @@ class Lignehome extends State {
 class Record {
  final String name;
  final String photo;
- final String soustitre;
+ final String soustitre ;
  final DocumentReference reference;
 
  Record.fromMap(Map<String, dynamic> map, {this.reference})

@@ -14,7 +14,10 @@ class Databasefavorie {
   
   static final columnId = '_id';
   static final columnName = 'clee';
-  static final columnAge = 'age';
+  static final columnNom = 'name';
+  static final columnSoustitre = 'soustitre';
+  static final columnPhoto = 'photo';
+
 
   // make this a singleton class
   Databasefavorie._privateConstructor();
@@ -40,7 +43,7 @@ class Databasefavorie {
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL)');
+    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL,$columnNom TEXT NULL,$columnSoustitre TEXT NULL,$columnPhoto TEXT NULL)');
   }
 
     // Helper methods
@@ -48,9 +51,9 @@ class Databasefavorie {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-  Future<int> insert(clee) async {
+  Future<int> insert(clee,nom,photo,soustitre) async {
     Database db = await instance.database;
-    return await db.insert(table, {'clee' : clee});
+    return await db.insert(table, {'clee' : clee,'name': nom,'photo' : photo,'soustitre' : soustitre});
   }
 
    // All of the rows are returned as a list of maps, where each map is 

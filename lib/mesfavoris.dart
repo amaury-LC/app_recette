@@ -40,11 +40,12 @@ class Mesfavoris extends StatelessWidget {
                     child: Column(children: <Widget>[
                   ListTile(
                     title: Text(x['name']),
-                    subtitle: Text(x['soustitre']),
+                    // subtitle: Text(x['soustitre']),
+                    
                     leading: x['photo'] != null
                         ? Image(
                             image: NetworkImage(x['photo']),
-                            height: 200,
+                           
                           )
                         : Text(""),
                     onTap: () {
@@ -52,7 +53,7 @@ class Mesfavoris extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Recettepresentation(x['record'])));
+                                  Recettepresentation(x['name'], x['photo'])));
                     },
                   )
                 ])))
