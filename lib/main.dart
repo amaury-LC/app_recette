@@ -15,7 +15,7 @@ import 'entrer_recette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
 
-
+var mesfavoris = [];
 
 void main() async {
   final dbHelper = Databasefavorie.instance;
@@ -23,7 +23,9 @@ void main() async {
     var tab = [];
     final allRows = await dbHelper.queryAllRows();
 
-    allRows.forEach((row) => tab.add(row['clee']));
+    allRows.forEach((row) =>  tab.add(row['clee']));
+
+    print(tab);
 
     return tab;
   }
@@ -41,14 +43,14 @@ void main() async {
   ));
 }
 
-var tab1 = [
-  recette("Croque-monsieur", "1", " ", "assets/croc.jpg"),
-  recette("Tacos mexicains", "2", " ", "assets/tacos.jpg"),
-  recette("Gaspacho au Thermomix", "3", " ", "assets/gaspacho.jpg"),
-  recette("Tarte au thon", "4", " ", "assets/tarte.jpg"),
-  recette("Samoussa rapide au boeuf", "5", " ", "assets/samoussa.jpg"),
-  // recette("test4", "6", null),
-];
+// var tab1 = [
+//   recette("Croque-monsieur", "1", " ", "assets/croc.jpg"),
+//   recette("Tacos mexicains", "2", " ", "assets/tacos.jpg"),
+//   recette("Gaspacho au Thermomix", "3", " ", "assets/gaspacho.jpg"),
+//   recette("Tarte au thon", "4", " ", "assets/tarte.jpg"),
+//   recette("Samoussa rapide au boeuf", "5", " ", "assets/samoussa.jpg"),
+//   // recette("test4", "6", null),
+// ];
 
 class recette {
   recette(this.titre, this.key, this.soustitre, this.photo);

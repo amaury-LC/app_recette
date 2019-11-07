@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertest/main.dart';
 
 import 'dart:async';
 
@@ -27,13 +28,13 @@ class Lignehome extends State {
 
   DocumentSnapshot x;
 
-  var favorite;
+  List favorite;
 
   
 
   
 
-  void changement(x) {
+  void changement(id,nom,photo,soustitre,record) {
     setState(() {
       final dbHelper = Databasefavorie.instance;
 
@@ -51,28 +52,43 @@ class Lignehome extends State {
 
       // _delete();
 
-      if (!favorite.contains(x)) {
-        favorite.add(x);
-        _insert(x);
+     
+        
+        
+        
+
+      
+      if (!favorite.contains(id)) {
+        favorite.add(id);
+        _insert(id);
+        mesfavoris.add({'id': id,'name': nom,'photo' : photo,'soustitre' : soustitre,'record' : record});
         print('insert');
       } else {
-        favorite.remove(x);
-        _delete(x);
+        favorite.remove(id);
+        _delete(id);
+        for(var i = 0 ; i < mesfavoris.length; i++){
+
+          if(mesfavoris[i]['id'] == id)
+
+          mesfavoris.removeAt(i);
+        }
         print('delete');
       }
+
+
     });
   }
 
   @override
   Widget build(BuildContext context){
 
-    
-
     final record = Record.fromSnapshot(x);
 
     // print('test1');
 
     // print(record.reference.documentID);
+
+   
 
     return Card( 
 
@@ -84,10 +100,10 @@ class Lignehome extends State {
       trailing: IconButton(
         icon: Icon(
           favorite.contains(record.reference.documentID) ? Icons.favorite : Icons.favorite_border,
-          color: favorite.contains(record.reference.documentID) ? Colors.red : null,
+          color:  favorite.contains(record.reference.documentID) ? Colors.red : null,
         ),
         onPressed: () {
-          changement(record.reference.documentID);
+          changement(record.reference.documentID,record.name,record.photo,record.soustitre,record);
         },
       ),
       onTap: () {
@@ -114,6 +130,8 @@ class Lignehome extends State {
 //        child: x.photo != null ? Image(image: AssetImage(x.photo),height: 100,) : Text(""),
         
 //       ),
+
+
 
 
 

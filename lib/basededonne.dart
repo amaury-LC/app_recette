@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
  
 class Databasefavorie {
 
@@ -16,7 +15,6 @@ class Databasefavorie {
   static final columnId = '_id';
   static final columnName = 'clee';
   static final columnAge = 'age';
-
 
   // make this a singleton class
   Databasefavorie._privateConstructor();
@@ -42,7 +40,7 @@ class Databasefavorie {
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL,)');
+    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL)');
   }
 
     // Helper methods
