@@ -96,13 +96,52 @@ class Lignehome extends State {
     print('test1');
     print(x['ingredient'][0]['name']);
 
+   return GestureDetector(
 
-    return Card( 
+     onTap: (){
+       Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo,x['ingredient'])));
+     },
+
+     child: Card( 
 
       
 
       child: Column(
-        children: <Widget>[ListTile(
+        children: <Widget>[
+
+          Container(
+
+            height: 200,
+            
+
+
+            
+
+             decoration: BoxDecoration(
+
+               
+
+               image: DecorationImage(
+                 image: NetworkImage(record.photo,),
+                 fit: BoxFit.cover,
+                 
+                 
+               )
+             ),
+
+            //  child: record.photo!= null ? Image(image: NetworkImage(record.photo,),) : Text(""), 
+
+           
+
+          ),
+
+          
+          
+          ListTile(
+
+            
 
           title: Text(record.name),
       subtitle: Text(record.soustitre) ,
@@ -115,13 +154,13 @@ class Lignehome extends State {
           changement(record.reference.documentID,record.name,record.photo,record.soustitre);
         },
       ),
-      onTap: () {
-         Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo,x['ingredient'])));
-      },
+      // onTap: () {
+      //    Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo,x['ingredient'])));
+      // },
       
-      leading:  record.photo!= null ? Image(image: NetworkImage(record.photo)) : Text(""),
+      // leading:  record.photo!= null ? Image(image: NetworkImage(record.photo)) : Text(""),
           
         
     
@@ -129,7 +168,13 @@ class Lignehome extends State {
         )],
       )
 
-    );
+    ) ,
+
+
+   );
+
+
+ 
 
 
   }
