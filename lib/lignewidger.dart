@@ -93,9 +93,13 @@ class Lignehome extends State {
 
     // print(record.reference.documentID);
 
-   
+    print('test1');
+    print(x['ingredient'][0]['name']);
+
 
     return Card( 
+
+      
 
       child: Column(
         children: <Widget>[ListTile(
@@ -114,7 +118,7 @@ class Lignehome extends State {
       onTap: () {
          Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo)));
+              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo,x['ingredient'])));
       },
       
       leading:  record.photo!= null ? Image(image: NetworkImage(record.photo)) : Text(""),
@@ -144,6 +148,7 @@ class Record {
  final String name;
  final String photo;
  final String soustitre ;
+ 
  final DocumentReference reference;
 
  Record.fromMap(Map<String, dynamic> map, {this.reference})
