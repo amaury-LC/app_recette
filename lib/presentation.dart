@@ -43,7 +43,7 @@ class Recettepresentationstate extends State {
         backgroundColor: Color.fromRGBO(240, 88, 93, 1),
       ),
       // body is the majority of the screen.
-      body:Column(
+      body:ListView(
 
         
         
@@ -51,11 +51,17 @@ class Recettepresentationstate extends State {
           
           child: photo_recette != null ? Image(image: NetworkImage(photo_recette),width: 800,) : Text(""),
           
-          ),Container( padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 8.0), child : Text('Ingrédients' , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Color.fromRGBO(240, 88, 93, 1),  ),)),
+          
+          ),
+
           Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children:  ingredient.map<Widget>((list)=> Text(list['name'])).toList(),
+        children:  <Widget>[Center( child : Container( padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0), child : Text('Ingrédients' , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Color.fromRGBO(240, 88, 93, 1),  ),))),]+ingredient.map<Widget>((list)=> ListTile(
+          title: Text(list['name']),
+          enabled: false,
+          trailing: Text(list['nombre']),
+        )).toList(),
 
       ))
 
