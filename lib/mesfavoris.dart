@@ -14,6 +14,8 @@ import 'basededonne.dart';
 import 'entrer_recette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'main.dart';
+import 'dart:convert';
+
 
 class Mesfavoris extends StatelessWidget {
   Mesfavoris(this.favoris);
@@ -49,11 +51,29 @@ class Mesfavoris extends StatelessWidget {
                           )
                         : Text(""),
                     onTap: () {
+                      
+               
+                      
+                      var jsoningredient ;
+                      var jsonetape ;
+                      if( x['ingredient'].runtimeType == String){
+                       jsoningredient = jsonDecode(x['ingredient']);
+                       jsonetape = jsonDecode(x['etape']);
+                       
+                        
+                      }
                       Navigator.push(
+
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Recettepresentation(x['name'], x['photo'],x['ingredient'],x['etape'])));
+
+                               x['ingredient'].runtimeType != String  ?   Recettepresentation(x['name'], x['photo'],x['ingredient'],x['etape']): Recettepresentation(x['name'], x['photo'],jsoningredient,jsonetape)
+                                  
+                                  
+                                  
+                                  ));
+                      
                     },
                   )
                 ])))

@@ -14,6 +14,7 @@ import 'basededonne.dart';
 import 'entrer_recette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
+import 'dart:convert';
 
 final dbHelper = Databasefavorie.instance;
 
@@ -27,7 +28,7 @@ void queryfavoris() async {
 
     final allRows = await dbHelper.queryAllRows();
 
-    allRows.forEach((row) =>  tab1.add({'id' : row['clee'], 'name' : row['name'], 'photo' : row['photo'], 'soustitre' : row['soustitre'] }));
+    allRows.forEach((row) =>  tab1.add({'id' : row['clee'], 'name' : row['name'], 'photo' : row['photo'], 'soustitre' : row['soustitre'],'ingredient' : row['ingredient'],'etape' : row['etape'] }));
 
     
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
  
 class Databasefavorie {
 
@@ -17,6 +18,8 @@ class Databasefavorie {
   static final columnNom = 'name';
   static final columnSoustitre = 'soustitre';
   static final columnPhoto = 'photo';
+  static final columnIngredient = 'ingredient';
+  static final columnEtape = 'etape';
 
 
   // make this a singleton class
@@ -43,7 +46,7 @@ class Databasefavorie {
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL,$columnNom TEXT NULL,$columnSoustitre TEXT NULL,$columnPhoto TEXT NULL)');
+    await db.execute('CREATE TABLE $table ($columnId INTEGER PRIMARY KEY,$columnName TEXT NULL,$columnNom TEXT NULL,$columnSoustitre TEXT NULL,$columnPhoto TEXT NULL,$columnIngredient TEXT NULL,$columnEtape TEXT NULL)');
   }
 
     // Helper methods
@@ -51,9 +54,9 @@ class Databasefavorie {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-  Future<int> insert(clee,nom,photo,soustitre) async {
+  Future<int> insert(clee,nom,photo,soustitre,ingredient,etape) async {
     Database db = await instance.database;
-    return await db.insert(table, {'clee' : clee,'name': nom,'photo' : photo,'soustitre' : soustitre});
+    return await db.insert(table, {'clee' : clee,'name': nom,'photo' : photo,'soustitre' : soustitre,'ingredient': jsonEncode(ingredient),'etape' : jsonEncode(etape)});
   }
 
    // All of the rows are returned as a list of maps, where each map is 

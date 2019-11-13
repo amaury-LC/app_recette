@@ -35,12 +35,12 @@ class Lignehome extends State {
 
   
 
-  void changement(id,nom,photo,soustitre) {
+  void changement(id,nom,photo,soustitre,ingredient,etape) {
     setState(() {
       final dbHelper = Databasefavorie.instance;
 
-      void _insert(clee,nom,soustitre,photo) async {
-        await dbHelper.insert(clee,nom,soustitre,photo);
+      void _insert(clee,nom,soustitre,photo,ingredient,etape) async {
+        await dbHelper.insert(clee,nom,soustitre,photo,ingredient,etape);
 
 
       }
@@ -63,8 +63,8 @@ class Lignehome extends State {
       
       if (!favorite.contains(id)) {
         favorite.add(id);
-        _insert(id,nom,photo,soustitre);
-        mesfavoris.add({'id': id,'name': nom,'photo' : photo,'soustitre' : soustitre});
+        _insert(id,nom,photo,soustitre,ingredient,etape);
+        mesfavoris.add({'id': id,'name': nom,'photo' : photo,'soustitre' : soustitre,'ingredient':ingredient,'etape':etape});
         print('insert');
         print(mesfavoris);
       } else {
@@ -151,7 +151,7 @@ class Lignehome extends State {
           color:  favorite.contains(record.reference.documentID) ? Colors.red : null,
         ),
         onPressed: () {
-          changement(record.reference.documentID,record.name,record.photo,record.soustitre);
+          changement(record.reference.documentID,record.name,record.photo,record.soustitre,x['ingredient'],x['etape']);
         },
       ),
       // onTap: () {
