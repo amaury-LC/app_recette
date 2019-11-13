@@ -113,7 +113,7 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recette de cuisine'),
+        title: Text('FOODAPP'),
         backgroundColor: Color.fromRGBO(240, 88, 93, 1),
       ),
       // body is the majority of the screen.
@@ -158,8 +158,13 @@ class Home extends StatelessWidget {
               height: 100.0,
             ),
             ListTile(
-              title: Text('Recettes'),
+              title: Text('Mes Recettes'),
               onTap: () {
+
+                 Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Home(favorite,mesrecettes)),
+          );
 
 
               },
