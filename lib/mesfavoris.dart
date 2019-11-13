@@ -53,7 +53,7 @@ class Mesfavoris extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Recettepresentation(x['name'], x['photo'],x['ingredient'])));
+                                  Recettepresentation(x['name'], x['photo'],x['ingredient'],x['etape'])));
                     },
                   )
                 ])))

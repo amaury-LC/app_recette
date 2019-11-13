@@ -101,7 +101,7 @@ class Lignehome extends State {
      onTap: (){
        Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo,x['ingredient'])));
+              MaterialPageRoute(builder: (context) => Recettepresentation(record.name,record.photo,x['ingredient'],x['etape'])));
      },
 
      child: Card( 
