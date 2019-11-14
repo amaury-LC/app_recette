@@ -16,6 +16,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
 import 'dart:convert';
 
+
 final dbHelper = Databasefavorie.instance;
 
 
@@ -127,18 +128,18 @@ class Home extends StatelessWidget {
             .toList(),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Enterrecit(favorite,mesrecettes)),
-          );
-        },
-        child: const Icon(
-          Icons.add,
-        ),
-        backgroundColor: Color.fromRGBO(240, 88, 93, 1),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => Enterrecit(favorite,mesrecettes)),
+      //     );
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //   ),
+      //   backgroundColor: Color.fromRGBO(240, 88, 93, 1),
+      // ),
 
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
