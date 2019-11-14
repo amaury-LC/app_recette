@@ -38,8 +38,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.4.3
   sqflite: ^1.1.7+1
-  image_picker: ^0.6.1+11
-  firebase_ml_vision: ^0.9.3+3
+  image_picker: ^0.4.12
+  firebase_ml_vision: ^0.2.1
   
 
   
