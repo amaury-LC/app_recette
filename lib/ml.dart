@@ -26,6 +26,7 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 
 
+
 class FacePage extends StatefulWidget{
 
 
@@ -76,7 +77,7 @@ class _FacePageState extends State<FacePage> {
   @override
   Widget build(BuildContext context){
 
- 
+    
 
 
 
@@ -87,7 +88,7 @@ class _FacePageState extends State<FacePage> {
          backgroundColor: Color.fromRGBO(240, 88, 93, 1),
         ),
 
-        body: Container(),
+        body: ImagesAndFaces(),
 
         floatingActionButton: FloatingActionButton(
 

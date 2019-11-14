@@ -69,7 +69,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
   // If you want to detect face contours (landmark detection and classification
   // don't require this additional model):
-    implementation 'com.google.firebase:firebase-ml-vision-face-model:19.0.0'
+    api 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
