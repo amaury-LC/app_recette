@@ -15,6 +15,7 @@ import 'entrer_recette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
 
 
 class FacePage extends StatefulWidget{
@@ -39,7 +40,12 @@ class _FacePageState extends State<FacePage> {
 
         floatingActionButton: FloatingActionButton(
 
-          onPressed: () {},
+          onPressed: () async{
+
+            final imageFile = await ImagePicker.pickImage(
+              source: ImageSource.gallery,
+            );
+          },
           tooltip: 'pick an image',
           child: Icon(Icons.add_a_photo),
           backgroundColor: Color.fromRGBO(240, 88, 93, 1),
