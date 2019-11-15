@@ -16,6 +16,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
 import 'dart:convert';
 import 'ml.dart';
+import 'package:splashscreen/splashscreen.dart';
+import 'fading_cube.dart';
+
+
+
 
 
 
@@ -100,6 +105,44 @@ class recette {
   var key;
 }
 
+
+// class MyApp extends StatefulWidget {
+
+//   MyApp(this.favoris);
+
+//   var favoris;
+//   @override
+//   _MyAppState createState() => new _MyAppState(favoris);
+// }
+
+
+// class _MyAppState extends State<MyApp> {
+
+//   _MyAppState(this.favoris);
+
+//   var favoris;
+//   @override
+//   Widget build(BuildContext context) {
+//     return new SplashScreen(
+//       seconds: 14,
+//       navigateAfterSeconds: new HomeStream(favoris),
+//       title: new Text('Welcome In SplashScreen',
+//         style: new TextStyle(
+//           fontWeight: FontWeight.bold,
+//           fontSize: 20.0
+//         ),
+//       ),
+//       image: new Image.network('https://flutter.io/images/catalog-widget-placeholder.png'),
+//       gradientBackground: new LinearGradient(colors: [Colors.cyan, Colors.blue], begin: Alignment.topLeft, end: Alignment.bottomRight),
+//       backgroundColor: Colors.white,
+//       styleTextUnderTheLoader: new TextStyle(),
+//       photoSize: 100.0,
+//       onClick: ()=>print("Flutter Egypt"),
+//       loaderColor: Colors.red,
+//     );
+//   }
+// }
+
 class Home extends StatelessWidget {
   Home(this.favorite,this.mesrecettes);
 
@@ -118,10 +161,12 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('FOODAPP'),
         backgroundColor: Color.fromRGBO(240, 88, 93, 1),
+
       ),
       // body is the majority of the screen.
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+        addAutomaticKeepAlives: false,
 
         children: mesrecettes
             .map(
@@ -211,7 +256,7 @@ class HomeStream extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('recettes').snapshots(),
       builder: (context, mesrecettes) {
-        if (!mesrecettes.hasData) return LinearProgressIndicator();
+        if (!mesrecettes.hasData) return SpinKitFadingCube(color: Color.fromRGBO(240, 88, 93, 1),);
 
         return Home(favorite, mesrecettes.data.documents);
       },
