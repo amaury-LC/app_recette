@@ -17,26 +17,22 @@ import 'entrer_recette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "mesfavoris.dart";
 import 'dart:convert';
-// import 'package:image_picker/image_picker.dart';
+
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_livestream_ml_vision/firebase_livestream_ml_vision.dart';
+
 
 class FacePage extends StatefulWidget {
-
-  
   @override
-  createState() => _FacePageState();
+  createState() =>_FacePageState();
 }
 
 class _FacePageState extends State<FacePage> {
 
+  // FirebaseVision _vision;
   var text1 = "test";
 
-
-  
-
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,54 +40,93 @@ class _FacePageState extends State<FacePage> {
           title: Text('FOODAPP'),
           backgroundColor: Color.fromRGBO(240, 88, 93, 1),
         ),
-        body : Center(child: Text(text1),),
+        body: Center(
+          child: Text(text1),
+        ),
         floatingActionButton: FloatingActionButton(
-          onPressed: ()  async{
+          onPressed: () async {
+
+
             final File imageFile = await ImagePicker.pickImage(
               source: ImageSource.camera,
             );
 
-            final FirebaseVisionImage visionImage =
-                FirebaseVisionImage.fromFile(imageFile);
+            // final FirebaseVisionImage visionImage =
+            //     FirebaseVisionImage.fromFile(imageFile);
 
-            final ImageLabeler labeler = FirebaseVision.instance.imageLabeler(
-              ImageLabelerOptions(confidenceThreshold: 0.75),
-            );
-
-            final List<ImageLabel> labels =
-                await labeler.processImage(visionImage);
-
-            for (ImageLabel label in labels) {
-               
-              final String text = label.text;
-              print('test photo text');
-
-              setState(() {
-              text1 = text;
-            });
-              
-              print(text);
-              final String entityId = label.entityId;
-              print('test photo entite');
-              print(entityId);
-              final double confidence = label.confidence;
-              print('test photo confidence');
-              print(confidence);
-            }
-
-             labeler.close();
-
+            
            
+            
+            
+            
+
+            
+
+            
+
+            // final ImageLabeler labeler = FirebaseVision.instance.imageLabeler();
+
+            // final List<ImageLabel> labels =
+            //     await labeler.processImage(visionImage);
+
+            // for (ImageLabel label in labels) {
+            //   final String text = label.text;
+            //   print('test photo text');
+
+            //   setState(() {
+            //     text1 = text;
+            //   });
+
+              
+
+            //   print(text);
+            //   final String entityId = label.entityId;
+            //   print('test photo entite');
+            //   print(entityId);
+            //   final double confidence = label.confidence;
+            //   print('test photo confidence');
+            //   print(confidence);
+            // }
+
+            // labeler.close();
+
+            // final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(imageFile);
+
+            // print('photo');
+
+            // print(visionImage);
+
+            //test
+
+
+            
+
+      
 
 
 
             
+
+
+             
+               
+
+
             
-            // // final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(imageFile);
 
-            // // print('photo');
 
-            // // print(visionImage);
+            
+
+
+
+
+
+
+
+
+
+
+
           },
           tooltip: 'pick an image',
           child: Icon(Icons.add_a_photo),
