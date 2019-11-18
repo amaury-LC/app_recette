@@ -20,7 +20,9 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+
   path_provider: ^1.4.0
+  
   
   flutter:
     sdk: flutter
@@ -45,6 +47,9 @@ dependencies:
   splashscreen: ^1.2.0
   flutter_spinkit: "^2.1.0"
   # firebase_livestream_ml_vision: ^1.0.1
+  tflite: ^1.0.4
+
+  
   
 
   
@@ -61,9 +66,19 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
+
+    - assets/detect.tflite
+    - assets/labelmap.txt
+    - assets/model.tflite
+    - assets/labels.txt
     - assets/lettre/dict.txt
-    - assets/lettre/manifest.json
     - assets/lettre/model.tflite
+    - assets/mobilenet_v1_1.0_224.tflite
+    - assets/mobilenet_v1_1.0_224.txt
+    - assets/quant/model_unquant.tflite
+    - assets/quant/labels.txt
+
+
 
 
   # The following line ensures that the Material Icons font is
