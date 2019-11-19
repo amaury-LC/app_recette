@@ -26,7 +26,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
 
 class FacePage extends StatefulWidget {
-
   FacePage(this.mesrecettes);
 
   var mesrecettes;
@@ -35,86 +34,96 @@ class FacePage extends StatefulWidget {
 }
 
 class _FacePageState extends State<FacePage> {
-
   _FacePageState(this.mesrecettes);
-  
-  var ingredient = ['tomates'] ;
+
+  var ingredient = ['tomates'];
   var search = true;
   var mesrecettes;
   var rechercheRecetteML;
 
-  void searchfunction(){
-
+  void searchfunction() {
     setState(() {
-
       rechercheRecetteML = [];
 
       var petitnombre = 0;
 
       search = false;
-       for(var i = 0; i < mesrecettes.length ; i++){
-
+      for (var i = 0; i < mesrecettes.length; i++) {
         print(i);
 
-         for( var y = 0; y < mesrecettes[i]['ingredient'].length ; y++){
+        for (var y = 0; y < mesrecettes[i]['ingredient'].length; y++) {
+          for (var t = 0; t < ingredient.length; t++) {
+            if (ingredient[t] == mesrecettes[i]['ingredient'][y]['name']) {
 
-            for(var t = 0 ; t < ingredient.length ; t++){
+              //suprimme une recette deja exitante dans le tableaux
 
-              if(ingredient[t] == mesrecettes[i]['ingredient'][y]['name']){
+                if(rechercheRecetteML.length != 0){
 
-                if(!rechercheRecetteML.contains(mesrecettes[i]['name']))
+                  for(var j = 0; j < rechercheRecetteML.length ; j++){
 
-                  rechercheRecetteML.add({'nombreIngredient' : i ,'recette' : mesrecettes[i]['name']});
+                    if(rechercheRecetteML[j]['recette'] == mesrecettes[i]['name'] ){
+
+                      rechercheRecetteML.removeAt(j);
+
+                    }
+
+                  }
+
+
                 }
+
                 
+            
+                rechercheRecetteML.add({'nombreIngredient' : i ,'recette' : mesrecettes[i]['name']});
+              
 
             }
-
-
-
-
-         }
-
-
-
-        
-       }
-
-     
-      
+          }
+        }
+      }
     });
-
-
   }
-
-    
-  
 
   @override
   Widget build(BuildContext context) {
     // print('ml recette :');
     // print(mesrecettes[0]['ingredient']);
 
-
-
     return Scaffold(
         appBar: AppBar(
           title: Text('FOODAPP'),
           backgroundColor: Color.fromRGBO(240, 88, 93, 1),
-          actions: <Widget>[IconButton(icon: Icon(Icons.search,color: Colors.white,size: 30.0,),iconSize: 30.0,onPressed: (){searchfunction();},)],
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 30.0,
+              ),
+              iconSize: 30.0,
+              onPressed: () {
+                searchfunction();
+              },
+            )
+          ],
         ),
-        
-        body: search ? Center(
-          child: ListView(
-             padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-              children: ingredient.map<Widget>((x) => Text(x)).toList(),
-          ),
-        ) : Center(
-          child: ListView(
-             padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-              children: rechercheRecetteML.map<Widget>((x) => Text(x['recette']+ " " + x['nombreIngredient'].toString())).toList(),
-          ),
-        ),
+        body: search
+            ? Center(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                  children: ingredient.map<Widget>((x) => Text(x)).toList(),
+                ),
+              )
+            : Center(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                  children: rechercheRecetteML
+                      .map<Widget>((x) => Text(x['recette'] +
+                          " " +
+                          x['nombreIngredient'].toString()))
+                      .toList(),
+                ),
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             final File imageFile = await ImagePicker.pickImage(
@@ -141,9 +150,6 @@ class _FacePageState extends State<FacePage> {
                 asynch: true // defaults to true
                 );
 
-       
-         
-
             print('camera');
             print(recognitions);
 
@@ -151,7 +157,7 @@ class _FacePageState extends State<FacePage> {
 
             setState(() {
               String label = recognitions[0]['label'];
-              ingredient.add(label) ;
+              ingredient.add(label);
             });
 
             //test
@@ -162,4 +168,3 @@ class _FacePageState extends State<FacePage> {
         ));
   }
 }
-
