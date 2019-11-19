@@ -93,8 +93,7 @@ class Lignehome extends State {
 
     // print(record.reference.documentID);
 
-    print('test1');
-    print(x['ingredient'][0]['name']);
+
 
    return GestureDetector(
 

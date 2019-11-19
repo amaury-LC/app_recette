@@ -26,23 +26,94 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
 
 class FacePage extends StatefulWidget {
+
+  FacePage(this.mesrecettes);
+
+  var mesrecettes;
   @override
-  createState() => _FacePageState();
+  createState() => _FacePageState(mesrecettes);
 }
 
 class _FacePageState extends State<FacePage> {
-  // FirebaseVision _vision;
-  var text1 = "test";
+
+  _FacePageState(this.mesrecettes);
+  
+  var ingredient = ['tomates'] ;
+  var search = true;
+  var mesrecettes;
+  var rechercheRecetteML;
+
+  void searchfunction(){
+
+    setState(() {
+
+      rechercheRecetteML = [];
+
+      var petitnombre = 0;
+
+      search = false;
+       for(var i = 0; i < mesrecettes.length ; i++){
+
+        print(i);
+
+         for( var y = 0; y < mesrecettes[i]['ingredient'].length ; y++){
+
+            for(var t = 0 ; t < ingredient.length ; t++){
+
+              if(ingredient[t] == mesrecettes[i]['ingredient'][y]['name']){
+
+                if(!rechercheRecetteML.contains(mesrecettes[i]['name']))
+
+                  rechercheRecetteML.add({'nombreIngredient' : i ,'recette' : mesrecettes[i]['name']});
+                }
+                
+
+            }
+
+
+
+
+         }
+
+
+
+        
+       }
+
+     
+      
+    });
+
+
+  }
+
+    
+  
 
   @override
   Widget build(BuildContext context) {
+    // print('ml recette :');
+    // print(mesrecettes[0]['ingredient']);
+
+
+
     return Scaffold(
         appBar: AppBar(
           title: Text('FOODAPP'),
           backgroundColor: Color.fromRGBO(240, 88, 93, 1),
+          actions: <Widget>[IconButton(icon: Icon(Icons.search,color: Colors.white,size: 30.0,),iconSize: 30.0,onPressed: (){searchfunction();},)],
         ),
-        body: Center(
-          child: Text(text1),
+        
+        body: search ? Center(
+          child: ListView(
+             padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+              children: ingredient.map<Widget>((x) => Text(x)).toList(),
+          ),
+        ) : Center(
+          child: ListView(
+             padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+              children: rechercheRecetteML.map<Widget>((x) => Text(x['recette']+ " " + x['nombreIngredient'].toString())).toList(),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
@@ -70,15 +141,8 @@ class _FacePageState extends State<FacePage> {
                 asynch: true // defaults to true
                 );
 
-            // var recognitions = await Tflite.detectObjectOnImage(
-            //     path: imageFile.path, // required
-            //     model: "SSDMobileNet",
-            //     imageMean: 127.5,
-            //     imageStd: 127.5,
-            //     threshold: 0.4, // defaults to 0.1
-            //     numResultsPerClass: 2, // defaults to 5
-            //     asynch: true // defaults to true
-            //     );
+       
+         
 
             print('camera');
             print(recognitions);
@@ -86,7 +150,8 @@ class _FacePageState extends State<FacePage> {
             // String test = recognitions[0].toString();
 
             setState(() {
-              text1 = recognitions[0]['label'];
+              String label = recognitions[0]['label'];
+              ingredient.add(label) ;
             });
 
             //test
@@ -97,3 +162,4 @@ class _FacePageState extends State<FacePage> {
         ));
   }
 }
+

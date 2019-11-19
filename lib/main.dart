@@ -223,7 +223,7 @@ class Home extends StatelessWidget {
 
                  Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FacePage()),
+            MaterialPageRoute(builder: (context) => FacePage(mesrecettes)),
           );
 
 
