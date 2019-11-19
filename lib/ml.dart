@@ -40,6 +40,7 @@ class _FacePageState extends State<FacePage> {
   var search = true;
   var mesrecettes;
   var rechercheRecetteML;
+  var rechercheRecetteML_tri;
 
   void searchfunction() {
     setState(() {
@@ -54,31 +55,34 @@ class _FacePageState extends State<FacePage> {
         for (var y = 0; y < mesrecettes[i]['ingredient'].length; y++) {
           for (var t = 0; t < ingredient.length; t++) {
             if (ingredient[t] == mesrecettes[i]['ingredient'][y]['name']) {
-
               //suprimme une recette deja exitante dans le tableaux
 
-                if(rechercheRecetteML.length != 0){
-
-                  for(var j = 0; j < rechercheRecetteML.length ; j++){
-
-                    if(rechercheRecetteML[j]['recette'] == mesrecettes[i]['name'] ){
-
-                      rechercheRecetteML.removeAt(j);
-
-                    }
-
+              if (rechercheRecetteML.length != 0) {
+                for (var j = 0; j < rechercheRecetteML.length; j++) {
+                  if (rechercheRecetteML[j]['recette'] ==
+                      mesrecettes[i]['name']) {
+                    rechercheRecetteML.removeAt(j);
                   }
-
-
                 }
+              }
 
-                
-            
-                rechercheRecetteML.add({'nombreIngredient' : i ,'recette' : mesrecettes[i]['name']});
-              
-
+              rechercheRecetteML.add(
+                  {'nombreIngredient': i, 'recette': mesrecettes[i]['name']});
             }
           }
+        }
+      }
+
+      // fin boucle
+
+      if (rechercheRecetteML.length != 0) {
+        for (var j = 0; j < rechercheRecetteML.length; j++) {
+          
+          
+
+
+
+
         }
       }
     });
