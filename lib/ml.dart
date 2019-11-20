@@ -172,7 +172,46 @@ class _FacePageState extends State<FacePage> {
                 child: ListView(
                   padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                   children: rechercheRecetteML
-                      .map<Widget>((x) => Text(x['recette']['name']))
+                      .map<Widget>((x) =>Card(
+                    child: Column(children: <Widget>[
+                  ListTile(
+                    title: Text(x['recette']['name']),
+                    // subtitle: Text(x['soustitre']),
+                    
+                    leading: x['recette']['photo'] != null
+                        ? Image(
+                            image: NetworkImage(x['recette']['photo']),
+                           
+                          )
+                        : Text(""),
+                    onTap: () {
+                      
+               
+                      
+                      var jsoningredient ;
+                      var jsonetape ;
+                      if( x['recette']['ingredient'].runtimeType == String){
+                       jsoningredient = jsonDecode(x['recette']['ingredient']);
+                       jsonetape = jsonDecode(x['recette']['etape']);
+                       
+                        
+                      }
+                      Navigator.push(
+
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+
+                               x['recette']['ingredient'].runtimeType != String  ?   Recettepresentation(x['recette']['name'], x['recette']['photo'],x['recette']['ingredient'],x['recette']['etape']): Recettepresentation(x['recette']['name'], x['recette']['photo'],jsoningredient,jsonetape)
+                                  
+                                  
+                                  
+                                  ));
+                      
+                    },
+                  )
+                ])))
+            
                       .toList(),
                 ),
               ),
