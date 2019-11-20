@@ -25,6 +25,8 @@ import 'package:image_picker/image_picker.dart';
 // import 'package:firebase_livestream_ml_vision/firebase_livestream_ml_vision.dart';
 import 'package:tflite/tflite.dart';
 
+
+
 class FacePage extends StatefulWidget {
   FacePage(this.mesrecettes);
 
@@ -36,55 +38,103 @@ class FacePage extends StatefulWidget {
 class _FacePageState extends State<FacePage> {
   _FacePageState(this.mesrecettes);
 
-  var ingredient = ['tomates'];
+  var ingredient = ['tomates','oignon blanc'];
   var search = true;
   var mesrecettes;
   var rechercheRecetteML;
-  var rechercheRecetteML_tri;
+  var rechercheRecetteML_tri = [];
+
 
   void searchfunction() {
     setState(() {
       rechercheRecetteML = [];
+      
+      
 
-      var petitnombre = 0;
+      
 
       search = false;
-      for (var i = 0; i < mesrecettes.length; i++) {
-        print(i);
+     var petitnombre = 0;
 
+      for (var i = 0; i < mesrecettes.length; i++) {
+         
         for (var y = 0; y < mesrecettes[i]['ingredient'].length; y++) {
+
+         
+          
+
           for (var t = 0; t < ingredient.length; t++) {
+            
             if (ingredient[t] == mesrecettes[i]['ingredient'][y]['name']) {
+             
               //suprimme une recette deja exitante dans le tableaux
 
               if (rechercheRecetteML.length != 0) {
+                
                 for (var j = 0; j < rechercheRecetteML.length; j++) {
-                  if (rechercheRecetteML[j]['recette'] ==
+                  if (rechercheRecetteML[j]['recette']['name'] ==
                       mesrecettes[i]['name']) {
+                  
                     rechercheRecetteML.removeAt(j);
                   }
                 }
               }
 
+               print(mesrecettes[i]['name'] + petitnombre.toString() );
+
+               
               rechercheRecetteML.add(
-                  {'nombreIngredient': i, 'recette': mesrecettes[i]['name']});
+
+                 
+                  
+                  {'nombreIngredient': petitnombre++, 'recette': mesrecettes[i]});
             }
+            
+          
           }
+
+       
+                
+    
         }
+
+           petitnombre = 0;
+      
+       
       }
+          
+      
 
       // fin boucle
 
+
+
+
+  
       if (rechercheRecetteML.length != 0) {
-        for (var j = 0; j < rechercheRecetteML.length; j++) {
-          
-          
+
+        rechercheRecetteML.sort((b,a) => a['nombreIngredient'].toString().compareTo(b['nombreIngredient'].toString()));
+
+        
+
+        
 
 
+         
 
-
-        }
       }
+
+      // print(rechercheRecetteML);
+
+      
+
+      
+      
+     
+
+    
+
+
     });
   }
 
@@ -122,9 +172,7 @@ class _FacePageState extends State<FacePage> {
                 child: ListView(
                   padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                   children: rechercheRecetteML
-                      .map<Widget>((x) => Text(x['recette'] +
-                          " " +
-                          x['nombreIngredient'].toString()))
+                      .map<Widget>((x) => Text(x['recette']['name']))
                       .toList(),
                 ),
               ),
